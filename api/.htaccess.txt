@@ -1,0 +1,12 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ $1.php [L]
+#RewriteRule ^record/(.+)/?$ record.php?action=$1 [NC,L] 	# preslika vzorec 'record/xxxx' v'record.php?action=xxxx' 
+
+
+# Onemogočimo direkten dostop do db_connection.php
+<Files db_connection.php>
+Order allow,deny
+Deny from all
+</Files>
