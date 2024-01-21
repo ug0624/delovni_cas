@@ -16,6 +16,7 @@ if (!isset($_SESSION["admin_logged_in"]) || $_SESSION["admin_logged_in"] !== tru
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data/time.ico" type="image/x-icon">
 </head>
 <body>
     <div class="menu-container">
