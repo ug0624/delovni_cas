@@ -32,6 +32,18 @@
 </head>
 <body>
 
+    <?php
+    // Start the session
+    session_start();
+    
+    // Check if the user is not logged in, redirect to login page
+    if (!isset($_SESSION["admin_logged_in"]) || $_SESSION["admin_logged_in"] !== true) {
+        header("Location: index.php");
+        exit();
+    }
+    ?>
+
+
     <h1>Work Time Tracking API Documentation</h1>
 
     <h2>1. API Call: Record Arrival Time</h2>

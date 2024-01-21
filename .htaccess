@@ -1,0 +1,7 @@
+
+# Onemogočimo direkten dostop do db_connection.php
+# Onemogočimo direkten dostop do db_connection.php
+<Files db_connection.php>
+Order allow,deny
+Deny from all
+</Files>
