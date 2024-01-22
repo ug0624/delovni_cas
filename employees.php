@@ -113,7 +113,13 @@ Content-Type: application/json
 {
     "success": true,
     "message": "Login successful.",
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+    "data": {
+        "employee_id": 1,
+        "first_name": "John",
+        "last_name": "Doe",
+        "position": "Software Engineer",
+        "email": "employee@example.com"
+    }
 }
         </code>
     </pre>
