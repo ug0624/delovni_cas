@@ -79,6 +79,7 @@ function create_employee($data)
 
         // Close the statement
         $stmt->close();
+        $conn->close();
     } else {
         http_response_code(400);
         $response['success'] = false;
@@ -92,7 +93,7 @@ function create_employee($data)
     exit();
 }
 
-// Function to check employee login
+// Function to check employee login and generate token
 function employee_login($data)
 {
     global $conn;
@@ -114,6 +115,9 @@ function employee_login($data)
         // Execute the statement
         $stmt->execute();
 
+        // Store the result set
+        $stmt->store_result();
+
         // Bind result variables
         $stmt->bind_result($employee_id, $first_name, $last_name, $position, $email, $hashed_password);
 
@@ -122,13 +126,9 @@ function employee_login($data)
 
         // Verify the password
         if (password_verify($password, $hashed_password)) {
-            // Password is correct, create session
-            session_start();
-            $_SESSION['employee_id'] = $employee_id;
-            $_SESSION['employee_first_name'] = $first_name;
-            $_SESSION['employee_last_name'] = $last_name;
-            $_SESSION['employee_position'] = $position;
-            $_SESSION['employee_email'] = $email;
+            // Password is correct, generate and store token
+            $token = generate_token();
+            store_token($employee_id, $token);
 
             // Set response
             $response['success'] = true;
@@ -138,7 +138,8 @@ function employee_login($data)
                 'first_name' => $first_name,
                 'last_name' => $last_name,
                 'position' => $position,
-                'email' => $email
+                'email' => $email,
+                'token' => $token
             );
         } else {
             // Password is incorrect
@@ -162,5 +163,36 @@ function employee_login($data)
     // Exit to prevent further execution
     exit();
 }
+
+
+// Function to generate a unique token
+function generate_token()
+{
+    return bin2hex(random_bytes(32)); // Generates a 64-character hexadecimal token
+}
+
+// Function to store the token in the database
+function store_token($employee_id, $token)
+{
+    global $conn;
+
+    // Set expiration time (e.g., one day)
+    $expiration_time = time() + (24 * 60 * 60);
+
+    // Use a prepared statement to prevent SQL injection
+    $sql = "UPDATE employees SET token = ?, token_expiration = ? WHERE employee_id = ?";
+    $stmt = $conn->prepare($sql);
+
+    // Bind parameters
+    $stmt->bind_param("sii", $token, $expiration_time, $employee_id);
+
+    // Execute the statement
+    $stmt->execute();
+
+    // Close the statement
+    $stmt->close();
+    $conn->close();
+}
+
 
 ?>

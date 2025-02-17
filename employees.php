@@ -46,7 +46,7 @@
     <h1>Employee API Documentation</h1>
 
     <h2>1. API Call: Create Employee</h2>
-    <p>Endpoint: <code>POST /delovni_cas/api/employee.php?action=create</code></p>
+    <p>Endpoint: <code>POST /delovni_cas/api/employee/create</code></p>
     <p>Description: Creates a new employee.</p>
     <p>Parameters:</p>
     <ul>
@@ -59,7 +59,7 @@
     <p>Example Request:</p>
     <pre>
         <code>
-POST /delovni_cas/api/employee.php?action=create HTTP/1.1
+POST /delovni_cas/api/employee/create HTTP/1.1
 Content-Type: application/json
 
 {
@@ -85,7 +85,7 @@ Content-Type: application/json
     </pre>
 
     <h2>2. API Call: Employee Login</h2>
-    <p>Endpoint: <code>POST /delovni_cas/api/employee.php?action=login</code></p>
+    <p>Endpoint: <code>POST /delovni_cas/api/employee/login</code></p>
     <p>Description: Authenticates an employee.</p>
     <p>Parameters:</p>
     <ul>
@@ -95,7 +95,7 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-POST /delovni_cas/api/employee.php?action=login HTTP/1.1
+POST /delovni_cas/api/employee/login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -119,6 +119,7 @@ Content-Type: application/json
         "last_name": "Doe",
         "position": "Software Engineer",
         "email": "employee@example.com"
+        "token":"7907a9141119efab39c8b82bb3ebaf0da069ed99034c8dc53918dcc3151bfacb"
     }
 }
         </code>

@@ -49,7 +49,7 @@
     <h2>1. API Calls for Recording Time Events</h2>
 
     <h3>1.1 Record Arrival Time</h3>
-    <p>Endpoint: <code>POST /delovni_cas/api/record.php?action=arrival</code></p>
+    <p>Endpoint: <code>POST /delovni_cas/api/record/arrival</code></p>
     <p>Description: Records the arrival time of an employee.</p>
     <p>Parameters:</p>
     <ul>
@@ -59,12 +59,13 @@
     <p>Example Request:</p>
     <pre>
         <code>
-POST /delovni_cas/api/record.php?action=arrival HTTP/1.1
+POST /delovni_cas/api/record.php/arrival HTTP/1.1
 Content-Type: application/json
 
 {
     "employee_id": 1,
     "arrival_time": "2024-01-19 09:00:00"
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
 }
         </code>
     </pre>
@@ -82,7 +83,7 @@ Content-Type: application/json
     </pre>
 
     <h3>1.2 Record Departure Time</h3>
-    <p>Endpoint: <code>POST /delovni_cas/api/record.php?action=departure</code></p>
+    <p>Endpoint: <code>POST /delovni_cas/api/record/departure</code></p>
     <p>Description: Records the departure time of an employee.</p>
     <p>Parameters:</p>
     <ul>
@@ -92,12 +93,13 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-POST /delovni_cas/api/record.php?action=departure HTTP/1.1
+POST /delovni_cas/api/record.php/departure HTTP/1.1
 Content-Type: application/json
 
 {
     "employee_id": 1,
     "departure_time": "2024-01-19 17:00:00"
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
 }
         </code>
     </pre>
@@ -115,7 +117,7 @@ Content-Type: application/json
     </pre>
 
     <h3>1.3 Record Lunch Time</h3>
-    <p>Endpoint: <code>POST /delovni_cas/api/record.php?action=lunch</code></p>
+    <p>Endpoint: <code>POST /delovni_cas/api/record/lunch</code></p>
     <p>Description: Records the lunch time of an employee.</p>
     <p>Parameters:</p>
     <ul>
@@ -125,12 +127,13 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-POST /delovni_cas/api/record.php?action=lunch HTTP/1.1
+POST /delovni_cas/api/record.php/lunch HTTP/1.1
 Content-Type: application/json
 
 {
     "employee_id": 1,
     "lunch_date": "2024-01-19"
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
 }
         </code>
     </pre>
@@ -148,7 +151,7 @@ Content-Type: application/json
     </pre>
 
     <h3>1.4 Record Leave</h3>
-    <p>Endpoint: <code>POST /delovni_cas/api/record.php?action=leave</code></p>
+    <p>Endpoint: <code>POST /delovni_cas/api/record/leave</code></p>
     <p>Description: Records the leave of an employee.</p>
     <p>Parameters:</p>
     <ul>
@@ -159,13 +162,14 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-POST /delovni_cas/api/record.php?action=leave HTTP/1.1
+POST /delovni_cas/api/record/leave HTTP/1.1
 Content-Type: application/json
 
 {
     "employee_id": 1,
     "leave_date": "2024-01-20",
     "leave_type": "vacation"
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
 }
         </code>
     </pre>
@@ -185,7 +189,7 @@ Content-Type: application/json
     <h2>2. API Calls for Updating Time Events</h2>
 
     <h3>2.1 Update Arrival Time</h3>
-    <p>Endpoint: <code>PUT /delovni_cas/api/record.php?action=update_arrival</code></p>
+    <p>Endpoint: <code>PUT /delovni_cas/api/record/update_arrival</code></p>
     <p>Description: Updates the arrival time of an employee.</p>
     <p>Parameters:</p>
     <ul>
@@ -195,12 +199,13 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-PUT /delovni_cas/api/record.php?action=update_arrival HTTP/1.1
+PUT /delovni_cas/api/record/update_arrival HTTP/1.1
 Content-Type: application/json
 
 {
     "arrival_id": 1,
     "arrival_time": "2024-01-19 10:00:00"
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
 }
         </code>
     </pre>
@@ -218,7 +223,7 @@ Content-Type: application/json
     </pre>
 
     <h3>2.2 Update Departure Time</h3>
-    <p>Endpoint: <code>PUT /delovni_cas/api/record.php?action=update_departure</code></p>
+    <p>Endpoint: <code>PUT /delovni_cas/api/record/update_departure</code></p>
     <p>Description: Updates the departure time of an employee.</p>
     <p>Parameters:</p>
     <ul>
@@ -228,12 +233,13 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-PUT /delovni_cas/api/record.php?action=update_departure HTTP/1.1
+PUT /delovni_cas/api/record/update_departure HTTP/1.1
 Content-Type: application/json
 
 {
     "departure_id": 1,
     "departure_time": "2024-01-19 18:00:00"
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
 }
         </code>
     </pre>
@@ -251,7 +257,7 @@ Content-Type: application/json
     </pre>
 
     <h3>2.3 Update Lunch Time</h3>
-    <p>Endpoint: <code>PUT /delovni_cas/api/record.php?action=update_lunch</code></p>
+    <p>Endpoint: <code>PUT /delovni_cas/api/record/update_lunch</code></p>
     <p>Description: Updates the lunch time of an employee.</p>
     <p>Parameters:</p>
     <ul>
@@ -261,12 +267,13 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-PUT /delovni_cas/api/record.php?action=update_lunch HTTP/1.1
+PUT /delovni_cas/api/record/update_lunch HTTP/1.1
 Content-Type: application/json
 
 {
     "lunch_id": 1,
     "lunch_date": "2024-01-19"
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
 }
         </code>
     </pre>
@@ -284,7 +291,7 @@ Content-Type: application/json
     </pre>
 
     <h3>2.4 Update Leave</h3>
-    <p>Endpoint: <code>PUT /delovni_cas/api/record.php?action=update_leave</code></p>
+    <p>Endpoint: <code>PUT /delovni_cas/api/record/update_leave</code></p>
     <p>Description: Updates the leave record of an employee.</p>
     <p>Parameters:</p>
     <ul>
@@ -295,13 +302,14 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-PUT /delovni_cas/api/record.php?action=update_leave HTTP/1.1
+PUT /delovni_cas/api/record/update_leave HTTP/1.1
 Content-Type: application/json
 
 {
     "leave_id": 1,
     "leave_date": "2024-01-21",
     "leave_type": "sick leave"
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
 }
         </code>
     </pre>
@@ -324,7 +332,7 @@ Content-Type: application/json
 
 
 <h3>3.1 Get Arrival Records by Employee ID</h3>
-    <p>Endpoint: <code>GET /delovni_cas/api/record.php?action=get_arrival</code></p>
+    <p>Endpoint: <code>GET /delovni_cas/api/record/get_arrival</code></p>
     <p>Description: Retrieves arrival records associated with a specific employee ID.</p>
     <p>Parameters:</p>
     <ul>
@@ -333,7 +341,13 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-GET /delovni_cas/api/record.php?action=get_arrival&employee_id=1 HTTP/1.1
+GET /delovni_cas/api/record/get_arrival HTTP/1.1
+Content-Type: application/json
+
+{
+    "employee_id": 6,
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
+}
         </code>
     </pre>
     <p>Example Response:</p>
@@ -353,7 +367,7 @@ Content-Type: application/json
 
 
     <h3>3.2 Get Departure Records by Employee ID</h3>
-    <p>Endpoint: <code>GET /delovni_cas/api/record.php?action=get_departure</code></p>
+    <p>Endpoint: <code>GET /delovni_cas/api/record/get_departure</code></p>
     <p>Description: Retrieves departure records associated with a specific employee ID.</p>
     <p>Parameters:</p>
     <ul>
@@ -362,7 +376,13 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-GET /delovni_cas/api/record.php?action=get_departure&employee_id=1 HTTP/1.1
+GET /delovni_cas/api/record/get_departure HTTP/1.1
+Content-Type: application/json
+
+{
+    "employee_id": 6,
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
+}
         </code>
     </pre>
     <p>Example Response:</p>
@@ -380,7 +400,7 @@ Content-Type: application/json
     </pre>
 
     <h3>3.3 Get Lunch Records by Employee ID</h3>
-    <p>Endpoint: <code>GET /delovni_cas/api/record.php?action=get_lunch</code></p>
+    <p>Endpoint: <code>GET /delovni_cas/api/record/get_lunch</code></p>
     <p>Description: Retrieves lunch records associated with a specific employee ID.</p>
     <p>Parameters:</p>
     <ul>
@@ -389,7 +409,13 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-GET /delovni_cas/api/record.php?action=get_lunch&employee_id=1 HTTP/1.1
+GET /delovni_cas/api/record/get_lunch HTTP/1.1
+Content-Type: application/json
+
+{
+    "employee_id": 6,
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
+}
         </code>
     </pre>
     <p>Example Response:</p>
@@ -407,7 +433,7 @@ Content-Type: application/json
     </pre>
 
     <h3>3.4 Get Leave Records by Employee ID</h3>
-    <p>Endpoint: <code>GET /delovni_cas/api/record.php?action=get_leave</code></p>
+    <p>Endpoint: <code>GET /delovni_cas/api/record/get_leave</code></p>
     <p>Description: Retrieves leave records associated with a specific employee ID.</p>
     <p>Parameters:</p>
     <ul>
@@ -416,7 +442,13 @@ Content-Type: application/json
     <p>Example Request:</p>
     <pre>
         <code>
-GET /delovni_cas/api/record.php?action=get_leave&employee_id=1 HTTP/1.1
+GET /delovni_cas/api/record/get_leave HTTP/1.1
+Content-Type: application/json
+
+{
+    "employee_id": 6,
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
+}
         </code>
     </pre>
     <p>Example Response:</p>

@@ -1,7 +1,22 @@
+RewriteEngine On
 
 # Onemogočimo direkten dostop do db_connection.php
-# Onemogočimo direkten dostop do db_connection.php
 <Files db_connection.php>
-Order allow,deny
-Deny from all
+    Order allow,deny
+    Deny from all
 </Files>
+
+<Files delovni_cas.sql>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Rewrite rule for the API
+RewriteRule ^api/record/([^/]+)/?$ api/record.php?action=$1 [QSA,NC,L]
+RewriteRule ^api/employee/([^/]+)/?$ api/employee.php?action=$1 [QSA,NC,L]
+RewriteRule ^api/compute/([^/]+)/?$ api/compute.php?action=$1 [QSA,NC,L]
+
+# Route other requests to the index.php file
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,NC,L]

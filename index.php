@@ -17,41 +17,38 @@ $response = array();
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve username and password from the form
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
-    // SQL query to check user credentials
-    $sql = "SELECT id, username, password FROM users WHERE username = '$username'";
-    $result = mysqli_query($conn, $sql);
+    // Prepared statement to prevent SQL injection
+    $sql = "SELECT id, username, password FROM users WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if ($result) {
-        // Check if a user with the provided username exists
-        if ($row = mysqli_fetch_assoc($result)) {
-            // Verify the password
-            if (password_verify($password, $row['password'])) {
-                // Password is correct, start a new session
-                session_start();
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+        // Verify the password
+        if (password_verify($password, $row['password'])) {
+            // Password is correct, start a new session
+            $_SESSION["admin_logged_in"] = true;
+            $_SESSION["admin_id"] = $row['id'];
+            $_SESSION["admin_username"] = $row['username'];
 
-                // Store data in session variables
-                $_SESSION["admin_logged_in"] = true;
-                $_SESSION["admin_id"] = $row['id'];
-                $_SESSION["admin_username"] = $row['username'];
-
-                // Redirect to menu page after successful login
-                header("Location: menu.php");
-                exit();
-            } else {
-                $response['success'] = false;
-                $response['message'] = 'Invalid password.';
-            }
+            // Redirect to menu page after successful login
+            header("Location: menu.php");
+            exit();
         } else {
             $response['success'] = false;
-            $response['message'] = 'User not found.';
+            $response['message'] = 'Invalid password.';
         }
     } else {
         $response['success'] = false;
-        $response['message'] = 'Error executing query: ' . mysqli_error($conn);
+        $response['message'] = 'User not found.';
     }
+
+    $stmt->close();
 } else {
     // Display login form if the request method is not POST
     ?>

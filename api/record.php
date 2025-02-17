@@ -9,6 +9,17 @@ $response = array();
 // Check if the request method is PUT, POST, GET, or DELETE
 $method = $_SERVER['REQUEST_METHOD'];
 
+$data = json_decode(file_get_contents('php://input'), true);
+
+if (!validateToken($data, $conn)) {
+    http_response_code(401);
+    $response['success'] = false;
+    $response['message'] = 'Invalid or expired token.';
+    echo json_encode($response);
+    exit;
+}
+
+
 if ($method === 'PUT' || $method === 'POST' || $method === 'GET' || $method === 'DELETE') {
     // Decode JSON data from the request body
     $data = json_decode(file_get_contents('php://input'), true);
@@ -60,6 +71,7 @@ if ($method === 'PUT' || $method === 'POST' || $method === 'GET' || $method === 
                     delete_leave($data);
                 }
                 break;
+
             default:
                 http_response_code(400);
                 $response['success'] = false;
@@ -83,6 +95,51 @@ $conn->close();
 
 // Echo the final JSON response
 echo json_encode($response);
+
+
+// Function to validate the token
+function validateToken($data, $conn) {
+    // Ensure $data has the necessary information
+    if (!isset($data['token'], $data['employee_id'])) {
+        return false;
+    }
+
+    // Sanitize input data
+    $token = $conn->real_escape_string($data['token']);
+    $employee_id = intval($data['employee_id']);
+
+    // Retrieve token and expiration from the database
+    $sql = "SELECT token, token_expiration FROM employees WHERE employee_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $employee_id);
+
+
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        if ($row) {
+            // Debug: Output the retrieved expiration time and current time
+            echo 'Token Expiration: ' . $row['token_expiration'] . '<br>';
+            echo 'Current Time: ' . time() . '<br>';
+
+            // Before the return statement in validateToken function
+            echo "Database Token: " . $row['token'] . "<br>";
+            echo "Database Expiration: " . $row['token_expiration'] . "<br>";
+            echo "Input Token: " . $token . "<br>";
+            echo "Current Time: " . time() . "<br>";
+
+
+            // Compare token and check expiration
+            if ($row['token'] === $token && $row['token_expiration'] >= time()) {
+                return true; // Token is valid
+            }
+        }
+    }
+
+    return false; // Token is invalid
+}
+
 
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

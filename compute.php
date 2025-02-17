@@ -46,7 +46,7 @@ if (!isset($_SESSION["admin_logged_in"]) || $_SESSION["admin_logged_in"] !== tru
     <h1>Work Time Tracking API Documentation</h1>
 
     <h2>API Call: Compute Hours Worked</h2>
-    <p>Endpoint: <code>POST /delovni_cas/api/compute.php?action=hours</code></p>
+    <p>Endpoint: <code>POST /delovni_cas/api/compute/hours</code></p>
     <p>Description: Computes the total hours worked by an employee between a specified start date and end date.</p>
     <p>Parameters:</p>
     <ul>
@@ -57,13 +57,14 @@ if (!isset($_SESSION["admin_logged_in"]) || $_SESSION["admin_logged_in"] !== tru
     <p>Example Request:</p>
     <pre>
         <code>
-POST /delovni_cas/api/compute.php?action=hours HTTP/1.1
+POST /delovni_cas/api/compute/hours HTTP/1.1
 Content-Type: application/json
 
 {
     "employee_id": 1,
     "start_date": "2024-01-01",
     "end_date": "2024-01-31"
+    "token": "67a0159eacd4b1f628008d55d4216463129a3f393bd04ee0bee4a575d36ba18d"
 }
         </code>
     </pre>

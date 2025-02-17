@@ -6,17 +6,16 @@ include 'db_connection.php';
 // API response format
 $response = array();
 
-// Start the session
-session_start();
+$data = json_decode(file_get_contents('php://input'), true);
 
-// Check if the user is not logged in, return an error response
-if (!isset($_SESSION["employee_id"])) {
+if (!validateToken($data, $conn)) {
     http_response_code(401);
     $response['success'] = false;
-    $response['message'] = 'Unauthorized. Please log in.';
+    $response['message'] = 'Invalid or expired token.';
     echo json_encode($response);
-    exit();
+    exit;
 }
+
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -40,6 +39,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode($response);
     exit();
 }
+
+// Function to validate the token
+function validateToken($data, $conn) {
+    // Ensure $data has the necessary information
+    if (!isset($data['token'], $data['employee_id'])) {
+        return false;
+    }
+
+    // Sanitize input data
+    $token = $conn->real_escape_string($data['token']);
+    $employee_id = intval($data['employee_id']);
+
+    // Retrieve token and expiration from the database
+    $sql = "SELECT token, token_expiration FROM employees WHERE employee_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $employee_id);
+
+
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        if ($row) {
+            // Debug: Output the retrieved expiration time and current time
+            echo 'Token Expiration: ' . $row['token_expiration'] . '<br>';
+            echo 'Current Time: ' . time() . '<br>';
+
+            // Before the return statement in validateToken function
+            echo "Database Token: " . $row['token'] . "<br>";
+            echo "Database Expiration: " . $row['token_expiration'] . "<br>";
+            echo "Input Token: " . $token . "<br>";
+            echo "Current Time: " . time() . "<br>";
+
+
+            // Compare token and check expiration
+            if ($row['token'] === $token && $row['token_expiration'] >= time()) {
+                return true; // Token is valid
+            }
+        }
+    }
+
+    return false; // Token is invalid
+}
+
 
 // Function to compute hours worked
 function compute_hours($data)
